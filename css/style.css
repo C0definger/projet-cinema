@@ -56,3 +56,38 @@ main {
   margin: 0;
   color: #aaa;
 }
+
+.movie-details-card {
+  display: flex;
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.movie-details-card img {
+  width: 300px;
+  max-width: 100%;
+  align-self: flex-start;
+  border-radius: 8px;
+}
+
+.movie-info h2 span {
+  color: #aaa;
+  font-weight: normal;
+}
+
+.movie-info p {
+  line-height: 1.5;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 1rem;
+  color: #f1f1f1;
+}
+
+@media (max-width: 700px) {
+  .movie-details-card {
+    flex-direction: column;
+  }
+}
