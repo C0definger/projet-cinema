@@ -1,8 +1,7 @@
 import { getMovieById } from "./api.js";
+import { NO_POSTER } from "./ui.js";
 
 const movieDetails = document.getElementById("movie-details");
-
-const NO_POSTER = "https://placehold.co/300x445?text=Pas+d%27affiche";
 
 // Construit le HTML de la fiche d'un film
 function createMovieDetails(movie) {
