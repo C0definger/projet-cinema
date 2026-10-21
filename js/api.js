@@ -9,3 +9,12 @@ export async function searchMovies(title, page = 1) {
   const data = await response.json();
   return data;
 }
+
+// Récupère les détails d'un film à partir de son identifiant imdbID
+export async function getMovieById(id) {
+  const response = await fetch(
+    `${BASE_URL}?apikey=${API_KEY}&i=${encodeURIComponent(id)}&plot=full`
+  );
+  const data = await response.json();
+  return data;
+}
