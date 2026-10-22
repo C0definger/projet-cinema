@@ -1,26 +1,49 @@
 import { searchMovies } from "./api.js";
 import { createMovieCard } from "./ui.js";
 
-// Mot-clé utilisé pour simuler les "films tendances"
+
 const TRENDING_QUERY = "star wars";
 
 const moviesList = document.getElementById("movies-list");
+const message = document.getElementById("movies-message");
+const loadMoreButton = document.getElementById("load-more");
 
-// Récupère les films et les affiche
-async function displayTrendingMovies() {
+let currentPage = 1;
+let loadedCount = 0;
+
+
+async function loadMovies() {
+  loadMoreButton.disabled = true;
+
   try {
-    const data = await searchMovies(TRENDING_QUERY);
+    const data = await searchMovies(TRENDING_QUERY, currentPage);
 
     if (data.Response === "False") {
-      moviesList.innerHTML = `<p>Aucun film trouvé.</p>`;
+      message.textContent = "Aucun film trouvé.";
+      loadMoreButton.hidden = true;
       return;
     }
 
-    moviesList.innerHTML = data.Search.map(createMovieCard).join("");
+    moviesList.insertAdjacentHTML(
+      "beforeend",
+      data.Search.map(createMovieCard).join("")
+    );
+
+    loadedCount += data.Search.length;
+
+    // On cache le bouton quand tous les films sont affichés
+    loadMoreButton.hidden = loadedCount >= Number(data.totalResults);
   } catch (error) {
-    moviesList.innerHTML = `<p>Erreur lors du chargement des films.</p>`;
+    message.textContent = "Erreur lors du chargement des films.";
     console.error(error);
+  } finally {
+    loadMoreButton.disabled = false;
   }
 }
 
-displayTrendingMovies();
+loadMoreButton.addEventListener("click", () => {
+  currentPage++;
+  loadMovies();
+});
+
+loadMovies();
