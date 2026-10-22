@@ -70,7 +70,7 @@ async function loadMore2024Movies() {
     const data = await searchMovies(SEARCH_QUERY_2024, currentPage, "2024", "movie");
 
         if (data.Response === "False") {
-      // data.Error contient la raison donnée par l'API
+      // data.Error contient la raison donnée par l'API en cas d'erreur de chargement
       if (data.Error === "Movie not found!") {
         message.textContent = "Plus aucun film de 2024 à afficher.";
       } else {
